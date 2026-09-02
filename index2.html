@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEONPAY — Зарабатывай на регистрации приложений</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(s,t)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '2110333649881604');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=2110333649881604&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Space Grotesk', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            neon: '#00ff88',
+            cyan: '#00f0ff',
+            purple: '#a855f7',
+            dark: '#05050a',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* ===== CSS VARIABLES ===== */
+    :root {
+      --bg: #05050a;
+      --neon: #00ff88;
+      --cyan: #00f0ff;
+      --purple: #a855f7;
+      --glass-bg: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --radius: 20px;
+    }
+
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: #e2e8f0;
+      overflow-x: hidden;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    body.no-scroll { overflow: hidden; }
+
+    /* ===== SELECTION ===== */
+    ::selection { background: rgba(0, 255, 136, 0.25); color: #fff; }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: rgba(0, 255, 136, 0.3); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(0, 255, 136, 0.5); }
+
+    /* ===== NOISE OVERLAY ===== */
+    .noise {
+      position: fixed; inset: 0; z-index: 9998; pointer-events: none; opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+    }
+
+    /* ===== DOT GRID ===== */
+    .dot-grid {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.05;
+      background-image: radial-gradient(rgba(255,255,255,0.6) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    /* ===== BLOBS ===== */
+    .blob {
+      position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.4;
+      will-change: transform; pointer-events: none;
+    }
+    .blob-1 { width: 600px; height: 600px; background: var(--cyan); top: -10%; left: -10%; animation: blobFloat1 20s ease-in-out infinite; }
+    .blob-2 { width: 500px; height: 500px; background: var(--purple); top: 10%; right: -5%; animation: blobFloat2 25s ease-in-out infinite; }
+    .blob-3 { width: 450px; height: 450px; background: var(--neon); bottom: -15%; left: 20%; animation: blobFloat3 22s ease-in-out infinite; }
+
+    @keyframes blobFloat1 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(80px, 60px) scale(1.1); }
+      66% { transform: translate(-40px, 100px) scale(0.95); }
+    }
+    @keyframes blobFloat2 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(-100px, 80px) scale(1.05); }
+      66% { transform: translate(60px, -50px) scale(0.9); }
+    }
+    @keyframes blobFloat3 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(60px, -80px) scale(1.1); }
+      66% { transform: translate(-80px, -30px) scale(0.95); }
+    }
+
+    /* ===== CUSTOM CURSOR ===== */
+    .cursor-dot {
+      position: fixed; top: 0; left: 0; width: 8px; height: 8px;
+      background: var(--neon); border-radius: 50%; pointer-events: none;
+      z-index: 99999; transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, background 0.2s;
+      mix-blend-mode: difference;
+    }
+    .cursor-ring {
+      position: fixed; top: 0; left: 0; width: 40px; height: 40px;
+      border: 1.5px solid rgba(0, 255, 136, 0.5); border-radius: 50%;
+      pointer-events: none; z-index: 99999; transform: translate(-50%, -50%);
+      transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease,
+                  background 0.3s ease, box-shadow 0.3s ease;
+    }
+    .cursor-ring.hover {
+      width: 64px; height: 64px;
+      border-color: var(--cyan);
+      background: rgba(0, 240, 255, 0.08);
+      box-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
+    }
+    .cursor-dot.hover {
+      width: 12px; height: 12px; background: var(--cyan);
+    }
+
+    @media (pointer: coarse) {
+      .cursor-dot, .cursor-ring { display: none !important; }
+    }
+
+    /* ===== PRELOADER ===== */
+    .preloader {
+      position: fixed; inset: 0; z-index: 99999;
+      background: var(--bg);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    .preloader.done { opacity: 0; visibility: hidden; pointer-events: none; }
+    .preloader-logo {
+      font-family: 'Space Grotesk', sans-serif; font-size: 2.5rem; font-weight: 700;
+      background: linear-gradient(135deg, #fff, var(--neon));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      animation: preloaderPulse 1.2s ease-in-out infinite;
+      letter-spacing: 0.05em;
+    }
+    .preloader-bar-track {
+      width: 200px; height: 2px; background: rgba(255,255,255,0.08);
+      border-radius: 2px; margin-top: 24px; overflow: hidden;
+    }
+    .preloader-bar {
+      height: 100%; width: 0%; background: linear-gradient(90deg, var(--neon), var(--cyan));
+      border-radius: 2px; transition: width 0.1s linear;
+      box-shadow: 0 0 12px var(--neon);
+    }
+    @keyframes preloaderPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 9000;
+      padding: 16px 32px;
+      transition: background 0.4s ease, backdrop-filter 0.4s ease, -webkit-backdrop-filter 0.4s ease;
+    }
+    .header.scrolled {
+      background: rgba(5, 5, 10, 0.7);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* ===== GLASS CARD ===== */
+    .glass {
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      position: relative; overflow: hidden;
+    }
+    .glass::before {
+      content: ''; position: absolute; inset: 0; border-radius: inherit;
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), transparent 50%);
+      pointer-events: none;
+    }
+
+    /* ===== GRADIENT TEXT ===== */
+    .gradient-text {
+      background: linear-gradient(90deg, #ffffff 0%, var(--neon) 30%, var(--cyan) 60%, #ffffff 100%);
+      background-size: 300% 100%;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent; color: transparent;
+      animation: gradientShift 6s linear infinite;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 300% 50%; }
+    }
+
+    /* ===== MAGNETIC BUTTON ===== */
+    .btn-primary {
+      position: relative; display: inline-flex; align-items: center; gap: 8px;
+      padding: 16px 36px; border-radius: 100px; border: none; cursor: pointer;
+      background: linear-gradient(135deg, var(--neon), #00cc6a);
+      color: #05050a; font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 1.05rem; letter-spacing: 0.02em;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+      overflow: hidden; z-index: 1;
+    }
+    .btn-primary::after {
+      content: ''; position: absolute; inset: 0; border-radius: inherit;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .btn-primary:hover::after { opacity: 1; }
+    .btn-primary:hover {
+      box-shadow: 0 0 60px rgba(0, 255, 136, 0.5), 0 0 120px rgba(0, 255, 136, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 16px 36px; border-radius: 100px; cursor: pointer;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #e2e8f0; font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600; font-size: 1.05rem; letter-spacing: 0.02em;
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+    }
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.2);
+      box-shadow: 0 0 30px rgba(255,255,255,0.05);
+    }
+
+    .btn-glass {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 12px 28px; border-radius: 100px; cursor: pointer;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      color: #fff; font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600; font-size: 0.95rem;
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      transition: all 0.3s;
+    }
+    .btn-glass:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
+
+    /* ===== TICKER ===== */
+    .ticker-wrap {
+      overflow: hidden; white-space: nowrap; position: relative;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.02);
+    }
+    .ticker-track {
+      display: inline-flex; gap: 48px; padding: 14px 0;
+      animation: tickerScroll 40s linear infinite;
+    }
+    .ticker-track:hover { animation-play-state: paused; }
+    @keyframes tickerScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .ticker-item {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.9rem; color: rgba(255,255,255,0.6);
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .ticker-item .amount { color: var(--neon); font-weight: 700; }
+    .ticker-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--neon); box-shadow: 0 0 8px var(--neon);
+      animation: livePulse 2s ease-in-out infinite;
+    }
+    @keyframes livePulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    /* ===== FLOATING ILLUSTRATION ===== */
+    .float-card {
+      position: absolute;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      will-change: transform;
+    }
+    .float-1 { top: 12%; right: 8%; width: 220px; animation: floatUp1 6s ease-in-out infinite; }
+    .float-2 { top: 55%; right: 15%; width: 200px; animation: floatUp2 7s ease-in-out infinite 0.5s; }
+    .float-3 { top: 30%; right: 22%; width: 100px; height: 100px; border-radius: 50%; animation: floatCoin 5s ease-in-out infinite 1s; }
+
+    @keyframes floatUp1 { 0%, 100% { transform: translateY(0) rotate(2deg); } 50% { transform: translateY(-18px) rotate(-1deg); } }
+    @keyframes floatUp2 { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-14px) rotate(1deg); } }
+    @keyframes floatCoin { 0%, 100% { transform: translateY(0) rotateY(0deg); } 50% { transform: translateY(-20px) rotateY(180deg); } }
+
+    /* ===== 3D TILT CARD ===== */
+    .tilt-card {
+      transform-style: preserve-3d; transition: transform 0.15s ease, box-shadow 0.3s ease;
+      will-change: transform;
+    }
+    .tilt-card:hover {
+      box-shadow: 0 0 40px rgba(0, 255, 136, 0.12), 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .tilt-card .glow {
+      position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+      background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%),
+        rgba(0, 255, 136, 0.1) 0%, transparent 60%);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .tilt-card:hover .glow { opacity: 1; }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal {
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1; transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ===== SCREENS ===== */
+    .screen { transition: opacity 0.6s ease, transform 0.6s ease, visibility 0s 0s; }
+    .screen.hidden {
+      opacity: 0; transform: translateY(30px) scale(0.98);
+      visibility: hidden; pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s ease, visibility 0s 0.4s;
+    }
+
+    /* ===== COUNTER NUM ===== */
+    .counter-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-variant-numeric: tabular-nums;
+      font-weight: 700;
+    }
+
+    /* ===== STEP CONNECTOR ===== */
+    .step-connector {
+      position: relative;
+    }
+    .step-connector::after {
+      content: ''; position: absolute; top: 50%; right: -30px;
+      width: 24px; height: 2px; background: linear-gradient(90deg, var(--neon), transparent);
+    }
+    @media (max-width: 1024px) {
+      .step-connector::after { display: none; }
+    }
+
+    /* ===== REVIEWS SLIDER ===== */
+    .reviews-viewport { overflow: hidden; }
+    .reviews-track {
+      display: flex; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .review-slide { min-width: 100%; }
+
+    /* ===== MASONRY ===== */
+    .masonry { columns: 4; column-gap: 16px; }
+    .masonry-item {
+      break-inside: avoid; margin-bottom: 16px;
+      border-radius: 16px; overflow: hidden; position: relative;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .masonry-item:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 30px rgba(0, 255, 136, 0.15), 0 10px 40px rgba(0,0,0,0.4);
+    }
+    .masonry-item img {
+      width: 100%; display: block;
+      border: 2px solid transparent;
+      transition: border-color 0.3s;
+    }
+    .masonry-item:hover img { border-color: var(--neon); }
+
+    @media (max-width: 1200px) { .masonry { columns: 3; } }
+    @media (max-width: 768px) { .masonry { columns: 2; } }
+    @media (max-width: 480px) { .masonry { columns: 1; } }
+
+    /* ===== HERO ENTER ANIMATIONS ===== */
+    .hero-enter { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    body.is-loaded .hero-enter { opacity: 1; transform: translateY(0); }
+    body.is-loaded .hero-enter.d1 { transition-delay: 0.15s; }
+    body.is-loaded .hero-enter.d2 { transition-delay: 0.3s; }
+    body.is-loaded .hero-enter.d3 { transition-delay: 0.45s; }
+    body.is-loaded .hero-enter.d4 { transition-delay: 0.6s; }
+    body.is-loaded .hero-enter.d5 { transition-delay: 0.75s; }
+
+    /* ===== BADGE PULSE RING ===== */
+    .badge-pulse {
+      position: relative;
+    }
+    .badge-pulse::before {
+      content: ''; position: absolute; inset: -1px; border-radius: inherit;
+      background: linear-gradient(135deg, var(--neon), var(--cyan), var(--purple));
+      z-index: -1; opacity: 0.4;
+      animation: badgeGlow 3s ease-in-out infinite;
+    }
+    @keyframes badgeGlow {
+      0%, 100% { opacity: 0.3; filter: blur(8px); }
+      50% { opacity: 0.5; filter: blur(12px); }
+    }
+
+    /* ===== FOCUS VISIBLE ===== */
+    :focus-visible {
+      outline: 2px solid var(--neon);
+      outline-offset: 3px;
+    }
+
+    /* ===== REDUCED MOTION ===== */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.2s !important;
+      }
+      .reveal { opacity: 1; transform: none; }
+      .hero-enter { opacity: 1; transform: none; }
+      .ticker-track { animation: none; }
+      .blob { animation: none; }
+    }
+
+    /* ===== BACK BUTTON ===== */
+    .btn-back {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px; border-radius: 100px; cursor: pointer;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      color: #e2e8f0; font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500; font-size: 0.9rem;
+      transition: all 0.3s;
+    }
+    .btn-back:hover { background: rgba(255,255,255,0.1); }
+
+    /* ===== SECTION OVERLINE ===== */
+    .overline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--neon); margin-bottom: 12px;
+    }
+
+
+
+    /* ===== REVEAL STAGGER (for grid items) ===== */
+    .stagger-1 { transition-delay: 0.05s; }
+    .stagger-2 { transition-delay: 0.15s; }
+    .stagger-3 { transition-delay: 0.25s; }
+    .stagger-4 { transition-delay: 0.35s; }
+
+    /* ===== STEP LINE BETWEEN CARDS ===== */
+    @media (min-width: 1024px) {
+      .steps-grid { position: relative; }
+      .step-line {
+        position: absolute; top: 60px; left: 33%; right: 33%;
+        height: 2px; background: linear-gradient(90deg, transparent, rgba(0,255,136,0.3), transparent);
+        z-index: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== NOISE & GRID OVERLAYS ===== -->
+  <div class="noise" aria-hidden="true"></div>
+  <div class="dot-grid" aria-hidden="true"></div>
+
+  <!-- ===== CUSTOM CURSOR ===== -->
+  <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+  <!-- ===== PRELOADER ===== -->
+  <div class="preloader" id="preloader" role="alert" aria-label="A carregar">
+    <div class="preloader-logo">NEONPAY</div>
+    <div class="preloader-bar-track"><div class="preloader-bar" id="preloaderBar"></div></div>
+  </div>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header" id="header" role="banner">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-3 text-white no-underline" data-cursor aria-label="NEONPAY — para a página inicial">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+          <rect x="2" y="2" width="32" height="32" rx="8" stroke="url(#logoGrad)" stroke-width="2"/>
+          <path d="M10 10h6l4 8-4 8h-6l4-8-4-8z" fill="url(#logoGrad)"/>
+          <path d="M20 10h6l-4 8 4 8h-6l-4-8 4-8z" fill="url(#logoGrad)" opacity="0.6"/>
+          <defs>
+            <linearGradient id="logoGrad" x1="0" y1="0" x2="36" y2="36">
+              <stop offset="0%" stop-color="#00ff88"/>
+              <stop offset="100%" stop-color="#00f0ff"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <span class="font-display font-bold text-xl tracking-wide">NEONPAY</span>
+      </a>
+
+    </div>
+  </header>
+
+  <!-- ===== SCREEN 1: HOME ===== -->
+  <main class="screen" id="screen-home">
+
+    <!-- ===== HERO ===== -->
+    <section class="relative min-h-screen flex flex-col justify-center overflow-hidden" id="hero">
+      <!-- Parallax blobs -->
+      <div class="blob blob-1 parallax-blob" data-speed="0.15" aria-hidden="true"></div>
+      <div class="blob blob-2 parallax-blob" data-speed="0.25" aria-hidden="true"></div>
+      <div class="blob blob-3 parallax-blob" data-speed="0.1" aria-hidden="true"></div>
+
+      <div class="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-20 w-full">
+        <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+          <!-- Text -->
+          <div class="flex-1 max-w-2xl">
+            <!-- Badge -->
+            <div class="hero-enter d1 badge-pulse inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-8"
+                 style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(12px);">
+              <span aria-hidden="true">🔥</span>
+              <span class="text-sm font-medium text-white/70">Mais de 10.000 pessoas já ganharam dinheiro connosco. Clica no botão «<span class="text-neon font-semibold cursor-pointer underline decoration-neon/40 decoration-1 underline-offset-2 hover:decoration-neon transition" onclick="showScreen('payouts')" role="link" tabindex="0">Pagamentos</span>» e vê todas as provas.</span>
+            </div>
+            <!-- Title -->
+            <h1 class="hero-enter d2 font-display font-bold leading-[1.05] mb-6"
+                style="font-size: clamp(2.4rem, 5.5vw, 4.5rem);">
+              <span class="gradient-text">GANHE DINHEIRO AO REGISTAR APLICAÇÕES</span>
+            </h1>
+            <!-- Subtitle -->
+            <p class="hero-enter d3 text-lg text-white/50 mb-10 max-w-xl" style="line-height: 1.7;">
+              A partir de 100 € por cada ação. <strong class="text-[#00f0ff]">SEM INVESTIMENTO</strong> — não precisa de investir nenhum dinheiro. Está aqui para ganhar dinheiro, não para gastar.
+O pagamento pelo seu serviço é feito imediatamente, através de MB WAY ou em criptomoeda.
+            </p>
+            <!-- Buttons -->
+            <div class="hero-enter d4 flex flex-wrap gap-4">
+              <a href="https://t.me/neonpay_pt" target="_blank" rel="noopener noreferrer" class="btn-glass magnetic" data-cursor
+                 style="border-color: rgba(0,180,255,0.3);"
+                 onmouseover="this.style.borderColor='rgba(0,180,255,0.6)'; this.style.boxShadow='0 0 30px rgba(0,180,255,0.15)'"
+                 onmouseout="this.style.borderColor='rgba(0,180,255,0.3)'; this.style.boxShadow='none'"
+                  aria-label="Enviar mensagem no Telegram">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                </svg>
+                Telegram
+              </a>
+              <a href="https://wa.me/351920225665" target="_blank" rel="noopener noreferrer" class="btn-glass magnetic" data-cursor
+                 style="border-color: rgba(37,211,102,0.3);"
+                 onmouseover="this.style.borderColor='rgba(37,211,102,0.6)'; this.style.boxShadow='0 0 30px rgba(37,211,102,0.15)'"
+                 onmouseout="this.style.borderColor='rgba(37,211,102,0.3)'; this.style.boxShadow='none'"
+                 aria-label="Enviar mensagem no WhatsApp">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+                </svg>
+                WhatsApp
+              </a>
+            </div>
+          </div>
+
+          <!-- Floating illustration -->
+          <div class="hidden lg:block flex-1 relative h-[420px] w-full hero-enter d5">
+            <!-- Payment card -->
+            <div class="float-card float-1 p-5">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-neon/30 to-cyan/20 flex items-center justify-center">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2" aria-hidden="true">
+                    <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-xs text-white/40">Bank App</div>
+                  <div class="text-sm font-semibold text-white">Registo</div>
+                </div>
+              </div>
+              <div class="text-2xl font-bold font-display text-neon">+150€</div>
+              <div class="text-xs text-white/40 mt-1">Pagamento recebido</div>
+            </div>
+            <!-- Toast notification -->
+            <div class="float-card float-2 p-4">
+              <div class="flex items-center gap-3">
+                <img src="https://i.pravatar.cc/40?img=32" alt="" class="w-9 h-9 rounded-full" loading="lazy">
+                <div>
+                  <div class="text-sm font-semibold text-white">Rafael</div>
+                  <div class="text-xs text-neon">+230€ · agora mesmo</div>
+                </div>
+              </div>
+            </div>
+            <!-- Coin -->
+            <div class="float-card float-3 flex items-center justify-center">
+              <span class="text-3xl font-bold font-display text-white/90" style="text-shadow: 0 0 20px rgba(0,255,136,0.5);">€</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ticker -->
+      <div class="hero-enter d5 ticker-wrap relative z-10">
+        <div class="flex items-center gap-3 absolute left-6 z-10 bg-dark/80 backdrop-blur-sm pr-4 py-3">
+          <span class="ticker-dot" aria-hidden="true"></span>
+          <span class="text-xs font-semibold text-white/60 uppercase tracking-wider font-display">Live</span>
+        </div>
+        <div class="ticker-track" id="tickerTrack">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== WHY US ===== -->
+    <section class="relative py-28 lg:py-36" id="why">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16 reveal">
+          <div class="overline">// Por Qur Nós</div>
+          <h2 class="font-display font-bold text-3xl md:text-5xl text-white mb-4">POR QUE ESCOLHEM A NOSSA EMPRESA</h2>
+          <p class="text-white/40 max-w-lg mx-auto">Segurança, rapidez e transparência.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Card 1 -->
+          <div class="tilt-card glass p-8 reveal stagger-1" data-cursor>
+            <div class="glow"></div>
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-neon/15 to-transparent flex items-center justify-center mb-5">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+              </svg>
+            </div>
+            <h3 class="font-display font-bold text-lg text-white mb-2">LEGAL E SEGURO</h3>
+            <p class="text-white/40 text-sm leading-relaxed">Estamos no mercado há mais de 5 anos e trabalhamos exclusivamente com aplicações legais, devidamente licenciadas e com boa reputação. Garantimos segurança e total conformidade legal.</p>
+          </div>
+          <!-- Card 2 -->
+          <div class="tilt-card glass p-8 reveal stagger-2" data-cursor>
+            <div class="glow"></div>
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan/15 to-transparent flex items-center justify-center mb-5">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/>
+                <polyline points="16 17 22 17 22 11"/>
+                <line x1="2" y1="2" x2="22" y2="22" stroke="#ff5555" stroke-width="2"/>
+              </svg>
+            </div>
+            <h3 class="font-display font-bold text-lg text-white mb-2">0 € DE INVESTIMENTO</h3>
+            <p class="text-white/40 text-sm leading-relaxed">Não é necessário fazer qualquer tipo de investimento ou depósito. Você está aqui para ganhar dinheiro, não para investir. Conosco, você recebe dinheiro — não precisa pagar nada.</p>
+          </div>
+          <!-- Card 3 -->
+          <div class="tilt-card glass p-8 reveal stagger-3" data-cursor>
+            <div class="glow"></div>
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple/15 to-transparent flex items-center justify-center mb-5">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/>
+                <line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
+                <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+              </svg>
+            </div>
+            <h3 class="font-display font-bold text-lg text-white mb-2">BÓNUS POR INDICAÇÃO DE AMIGOS</h3>
+            <p class="text-white/40 text-sm leading-relaxed">Convide amigos, familiares e colegas e receba dinheiro por cada pessoa indicada. O pagamento mínimo por cada amigo que se juntar é de 100 €.</p>
+          </div>
+          <!-- Card 4 -->
+          <div class="tilt-card glass p-8 reveal stagger-4" data-cursor>
+            <div class="glow"></div>
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-neon/15 to-transparent flex items-center justify-center mb-5">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <h3 class="font-display font-bold text-lg text-white mb-2">PAGAMENTOS 24/7</h3>
+            <p class="text-white/40 text-sm leading-relaxed">Os pagamentos são efetuados 24 horas por dia, 7 dias por semana, incluindo fins de semana e feriados. Você recebe o dinheiro imediatamente após concluir a tarefa com sucesso. O pagamento é feito de forma instantânea através de MB WAY, transferência bancária ou criptomoeda.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CTA ===== -->
+    <section class="relative py-28 lg:py-40" id="cta">
+      <div class="max-w-7xl mx-auto px-6 text-center">
+        <h2 class="font-display font-bold text-3xl md:text-6xl text-white mb-4 reveal">
+          Pronto para começar?
+        </h2>
+        <p class="text-white/40 text-lg mb-10 reveal reveal-delay-1">
+          Envie a palavra-código <span class="inline-block px-3 py-1 rounded-lg bg-neon/10 text-neon font-bold font-display border border-neon/20">BÓNUS</span> pelo WhatsApp ou Telegram e os nossos consultores responderão imediatamente.
+        </p>
+        <div class="inline-grid grid-cols-2 gap-4 justify-center reveal reveal-delay-2">
+          <a href="https://t.me/neonpay_pt" target="_blank" rel="noopener noreferrer" class="btn-glass magnetic" data-cursor
+             style="border-color: rgba(0,180,255,0.3);"
+             onmouseover="this.style.borderColor='rgba(0,180,255,0.6)'; this.style.boxShadow='0 0 30px rgba(0,180,255,0.15)'"
+             onmouseout="this.style.borderColor='rgba(0,180,255,0.3)'; this.style.boxShadow='none'"
+             aria-label="Enviar mensagem no Telegram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+            </svg>
+            Telegram
+          </a>
+          <a href="https://wa.me/351920225665" target="_blank" rel="noopener noreferrer" class="btn-glass magnetic" data-cursor
+             style="border-color: rgba(37,211,102,0.3);"
+             onmouseover="this.style.borderColor='rgba(37,211,102,0.6)'; this.style.boxShadow='0 0 30px rgba(37,211,102,0.15)'"
+             onmouseout="this.style.borderColor='rgba(37,211,102,0.3)'; this.style.boxShadow='none'"
+             aria-label="Enviar mensagem no WhatsApp">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+            </svg>
+            WhatsApp
+          </a>
+          <button class="btn-glass magnetic col-span-2 justify-center" data-cursor onclick="showScreen('payouts')"
+                  style="border-color: rgba(0,255,136,0.3);"
+                  onmouseover="this.style.borderColor='rgba(0,255,136,0.6)'; this.style.boxShadow='0 0 30px rgba(0,255,136,0.15)'"
+                  onmouseout="this.style.borderColor='rgba(0,255,136,0.3)'; this.style.boxShadow='none'">
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+              <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="currentColor" font-size="18" font-weight="700" font-family="sans-serif">€</text>
+            </svg>
+            Ver pagamentos
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="relative border-t border-white/5 py-8">
+      <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/30">
+        <div>&copy; 2026 NEONPAY. Todos os direitos reservados.</div>
+        <div class="flex gap-6">
+          <a href="#" class="hover:text-white/60 transition" data-cursor>Política de Privacidade</a>
+          <a href="#" class="hover:text-white/60 transition" data-cursor>Termos de Uso</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- ===== SCREEN 2: PAYOUTS ===== -->
+  <main class="screen hidden" id="screen-payouts" aria-label="Pagamentos reais">
+    <!-- Ambient blobs (smaller) -->
+    <div class="blob blob-1 opacity-20" aria-hidden="true"></div>
+    <div class="blob blob-3 opacity-15" aria-hidden="true"></div>
+
+    <div class="relative py-28 lg:py-36">
+      <div class="max-w-7xl mx-auto px-6">
+        <!-- Back -->
+        <button class="btn-back magnetic mb-10" data-cursor onclick="showScreen('home')" aria-label="Voltar à página inicial">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          Voltar
+        </button>
+
+        <div class="text-center mb-16">
+          <div class="overline">// Pagamentos</div>
+          <h1 class="font-display font-bold text-3xl md:text-5xl text-white mb-4">Pagamentos reais</h1>
+          <p class="text-white/40 max-w-lg mx-auto">Mais de 10.000 pagamentos bem-sucedidos no último mês</p>
+        </div>
+
+        <!-- Info text -->
+        <div class="max-w-2xl mx-auto mb-10 text-center reveal">
+          <p class="text-white/70 text-sm leading-relaxed">Queridos amigos, apresentamos apenas alguns exemplos de pagamentos bem-sucedidos. Por motivos de segurança, os dados dos beneficiários foram ocultados.</p>
+          <p class="text-white/70 text-sm leading-relaxed mt-3">Você também pode ganhar dinheiro da mesma forma. Entre em contato conosco agora mesmo pelo <strong class="text-[#00f0ff]">WhatsApp</strong> ou <strong class="text-[#00f0ff]">Telegram</strong>.</p>
+        </div>
+
+        <!-- Masonry grid -->
+        <div class="masonry">
+          <div class="masonry-item"><img src="photo/1.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/2.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/3.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/4.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/5.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/6.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/7.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/8.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/9.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/10.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/11.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/12.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/13.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/14.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/15.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/16.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/17.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/18.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/19.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/20.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/21.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/22.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/23.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/24.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/25.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/26.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/27.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/28.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/29.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/30.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+          <div class="masonry-item"><img src="photo/31.jpg" alt="Captura de ecrã do pagamento" loading="lazy"></div>
+        </div>
+
+        <!-- CTA -->
+        <div class="text-center mt-20 mb-10">
+          <h2 class="font-display font-bold text-2xl md:text-4xl text-white mb-4">Pronto para começar?</h2>
+          <p class="text-white/40 mb-8">Envie a palavra-código <span class="inline-block px-3 py-1 rounded-lg bg-neon/10 text-neon font-bold font-display border border-neon/20">BÓNUS</span> pelo WhatsApp ou Telegram e os nossos consultores responderão imediatamente.</p>
+          <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="https://t.me/neonpay_pt" target="_blank" rel="noopener noreferrer" class="btn-glass magnetic" data-cursor
+               style="border-color: rgba(0,180,255,0.3);"
+               onmouseover="this.style.borderColor='rgba(0,180,255,0.6)'; this.style.boxShadow='0 0 30px rgba(0,180,255,0.15)'"
+               onmouseout="this.style.borderColor='rgba(0,180,255,0.3)'; this.style.boxShadow='none'"
+               aria-label="Enviar mensagem no Telegram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+              </svg>
+              Telegram
+            </a>
+            <a href="https://wa.me/351920225665" target="_blank" rel="noopener noreferrer" class="btn-glass magnetic" data-cursor
+               style="border-color: rgba(37,211,102,0.3);"
+               onmouseover="this.style.borderColor='rgba(37,211,102,0.6)'; this.style.boxShadow='0 0 30px rgba(37,211,102,0.15)'"
+               onmouseout="this.style.borderColor='rgba(37,211,102,0.3)'; this.style.boxShadow='none'"
+               aria-label="Enviar mensagem no WhatsApp">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+              </svg>
+              WhatsApp
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="relative border-t border-white/5 py-8">
+      <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/30">
+        <div>&copy; 2026 NEONPAY. Todos os direitos reservados.</div>
+        <div class="flex gap-6">
+          <a href="#" class="hover:text-white/60 transition" data-cursor>Política de Privacidade</a>
+          <a href="#" class="hover:text-white/60 transition" data-cursor>Termos de Uso</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+  (function() {
+    'use strict';
+
+    /* ===== PRELOADER ===== */
+    const preloader = document.getElementById('preloader');
+    const preloaderBar = document.getElementById('preloaderBar');
+    let loadProgress = 0;
+
+    function updatePreloader() {
+      loadProgress += Math.random() * 15 + 5;
+      if (loadProgress > 100) loadProgress = 100;
+      preloaderBar.style.width = loadProgress + '%';
+      if (loadProgress < 100) {
+        requestAnimationFrame(() => setTimeout(updatePreloader, 80));
+      } else {
+        setTimeout(() => {
+          preloader.classList.add('done');
+          document.body.classList.add('is-loaded');
+          document.body.classList.remove('no-scroll');
+        }, 400);
+      }
+    }
+
+    document.body.classList.add('no-scroll');
+    requestAnimationFrame(() => setTimeout(updatePreloader, 200));
+
+    /* ===== CUSTOM CURSOR ===== */
+    const cursorDot = document.getElementById('cursorDot');
+    const cursorRing = document.getElementById('cursorRing');
+    let mouseX = -100, mouseY = -100;
+    let ringX = -100, ringY = -100;
+    const isFinePointer = window.matchMedia('(pointer: fine)').matches;
+
+    if (isFinePointer) {
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursorDot.style.left = mouseX + 'px';
+        cursorDot.style.top = mouseY + 'px';
+      });
+
+      function animateRing() {
+        ringX += (mouseX - ringX) * 0.12;
+        ringY += (mouseY - ringY) * 0.12;
+        cursorRing.style.left = ringX + 'px';
+        cursorRing.style.top = ringY + 'px';
+        requestAnimationFrame(animateRing);
+      }
+      animateRing();
+
+      document.querySelectorAll('[data-cursor], a, button').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          cursorRing.classList.add('hover');
+          cursorDot.classList.add('hover');
+        });
+        el.addEventListener('mouseleave', () => {
+          cursorRing.classList.remove('hover');
+          cursorDot.classList.remove('hover');
+        });
+      });
+    }
+
+    /* ===== HEADER SCROLL ===== */
+    const header = document.getElementById('header');
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+      const st = window.scrollY;
+      header.classList.toggle('scrolled', st > 60);
+      lastScroll = st;
+    }, { passive: true });
+
+    /* ===== SCROLL REVEAL ===== */
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    /* ===== PARALLAX BLOBS ===== */
+    const parallaxBlobs = document.querySelectorAll('.parallax-blob');
+    function updateParallax() {
+      const scrollY = window.scrollY;
+      parallaxBlobs.forEach(blob => {
+        const speed = parseFloat(blob.dataset.speed) || 0.1;
+        blob.style.transform = `translateY(${scrollY * speed}px)`;
+      });
+    }
+    window.addEventListener('scroll', updateParallax, { passive: true });
+
+    /* ===== COUNTERS ===== */
+    function formatNumber(val, decimals, prefix, suffix) {
+      const fixed = val.toFixed(decimals);
+      const parts = fixed.split('.');
+      parts[0] = Number(parts[0]).toLocaleString('en-US');
+      return prefix + parts.join('.') + suffix;
+    }
+
+    function animateCounter(el) {
+      const target = parseFloat(el.dataset.target);
+      const decimals = parseInt(el.dataset.decimals || '0');
+      const prefix = el.dataset.prefix || '';
+      const suffix = el.dataset.suffix || '';
+      const duration = 2200;
+      const start = performance.now();
+
+      function tick(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = target * eased;
+        el.textContent = formatNumber(current, decimals, prefix, suffix);
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          el.textContent = formatNumber(target, decimals, prefix, suffix);
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.counter-num').forEach(el => counterObserver.observe(el));
+
+    /* ===== 3D TILT ===== */
+    document.querySelectorAll('.tilt-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;
+        const y = (e.clientY - rect.top) / rect.height;
+        const rotateX = (0.5 - y) * 12;
+        const rotateY = (x - 0.5) * 12;
+        card.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+        const glow = card.querySelector('.glow');
+        if (glow) {
+          glow.style.setProperty('--mx', (x * 100) + '%');
+          glow.style.setProperty('--my', (y * 100) + '%');
+        }
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(600px) rotateX(0deg) rotateY(0deg) scale(1)';
+      });
+    });
+
+    /* ===== MAGNETIC BUTTONS ===== */
+    document.querySelectorAll('.magnetic').forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        btn.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px)`;
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = 'translate(0, 0)';
+      });
+    });
+
+    /* ===== TICKER ===== */
+    const tickerData = [
+      { name: 'Afonso', amount: '150€', time: '3 dias atrás' },
+      { name: 'Mariana', amount: '420€', time: 'agora mesmo' },
+      { name: 'Bruno', amount: '280€', time: '2 dias atrás' },
+      { name: 'Diogo', amount: '185€', time: '1 dia atrás' },
+      { name: 'Leonor', amount: '310€', time: '3 dias atrás' },
+      { name: 'Pedro', amount: '120€', time: '5 horas atrás' },
+      { name: 'Sara', amount: '850€', time: '2 dias atrás' },
+      { name: 'Hugo', amount: '270€', time: '1 dia atrás' },
+      { name: 'Marta', amount: '405€', time: '3 dias atrás' },
+      { name: 'Nuno', amount: '95€', time: '12 horas atrás' },
+      { name: 'Teresa', amount: '340€', time: '2 dias atrás' },
+      { name: 'Rafael', amount: '160€', time: '1 dia atrás' },
+    ];
+
+    const tickerTrack = document.getElementById('tickerTrack');
+    function buildTickerItem(d) {
+      return '<span class="ticker-item"><span class="ticker-dot" aria-hidden="true"></span>' +
+        d.name + ' recebeu <span class="amount">' + d.amount + '</span> · ' + d.time + '</span>';
+    }
+    let tickerHTML = '';
+    tickerData.forEach(d => { tickerHTML += buildTickerItem(d); });
+    // Duplicate for seamless loop
+    let tickerHTML2 = '';
+    tickerData.forEach(d => { tickerHTML2 += buildTickerItem(d); });
+    tickerTrack.innerHTML = tickerHTML + tickerHTML2;
+
+    /* ===== SCREEN SWITCHING ===== */
+    window.showScreen = function(name) {
+      const home = document.getElementById('screen-home');
+      const payouts = document.getElementById('screen-payouts');
+      if (name === 'payouts') {
+        home.classList.add('hidden');
+        payouts.classList.remove('hidden');
+      } else {
+        payouts.classList.add('hidden');
+        home.classList.remove('hidden');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Re-observe reveals on newly shown screen
+      setTimeout(() => {
+        document.querySelectorAll('.reveal:not(.visible)').forEach(el => revealObserver.observe(el));
+      }, 100);
+    };
+
+    window.scrollToSection = function(id) {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    /* ===== REVIEWS SLIDER ===== */
+    let reviewIdx = 0;
+    const reviewTotal = 3;
+    const reviewsTrack = document.getElementById('reviewsTrack');
+    const reviewDots = document.getElementById('reviewDots').children;
+    let reviewAutoplay;
+
+    function goToReview(idx) {
+      reviewIdx = (idx + reviewTotal) % reviewTotal;
+      reviewsTrack.style.transform = 'translateX(-' + (reviewIdx * 100) + '%)';
+      Array.from(reviewDots).forEach((dot, i) => {
+        dot.classList.toggle('bg-neon', i === reviewIdx);
+        dot.classList.toggle('bg-white/20', i !== reviewIdx);
+      });
+    }
+
+    window.moveReview = function(dir) {
+      goToReview(reviewIdx + dir);
+      resetReviewAutoplay();
+    };
+
+    Array.from(reviewDots).forEach((dot, i) => {
+      dot.addEventListener('click', () => { goToReview(i); resetReviewAutoplay(); });
+    });
+
+    function startReviewAutoplay() {
+      reviewAutoplay = setInterval(() => goToReview(reviewIdx + 1), 5000);
+    }
+
+    function resetReviewAutoplay() {
+      clearInterval(reviewAutoplay);
+      startReviewAutoplay();
+    }
+
+    startReviewAutoplay();
+
+    // Pause on hover
+    const reviewsViewport = document.querySelector('.reviews-viewport');
+    reviewsViewport.addEventListener('mouseenter', () => clearInterval(reviewAutoplay));
+    reviewsViewport.addEventListener('mouseleave', startReviewAutoplay);
+
+    // Touch swipe support
+    let touchStartX = 0;
+    reviewsViewport.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+      clearInterval(reviewAutoplay);
+    }, { passive: true });
+    reviewsViewport.addEventListener('touchend', (e) => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) {
+        moveReview(diff > 0 ? 1 : -1);
+      } else {
+        startReviewAutoplay();
+      }
+    }, { passive: true });
+
+  })();
+  </script>
+</body>
+</html>
