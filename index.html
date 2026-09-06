@@ -1069,60 +1069,62 @@ O pagamento pelo seu serviço é feito imediatamente, através de MB WAY ou em c
     };
 
     /* ===== REVIEWS SLIDER ===== */
-    let reviewIdx = 0;
-    const reviewTotal = 3;
     const reviewsTrack = document.getElementById('reviewsTrack');
-    const reviewDots = document.getElementById('reviewDots').children;
-    let reviewAutoplay;
-
-    function goToReview(idx) {
-      reviewIdx = (idx + reviewTotal) % reviewTotal;
-      reviewsTrack.style.transform = 'translateX(-' + (reviewIdx * 100) + '%)';
-      Array.from(reviewDots).forEach((dot, i) => {
-        dot.classList.toggle('bg-neon', i === reviewIdx);
-        dot.classList.toggle('bg-white/20', i !== reviewIdx);
-      });
-    }
-
-    window.moveReview = function(dir) {
-      goToReview(reviewIdx + dir);
-      resetReviewAutoplay();
-    };
-
-    Array.from(reviewDots).forEach((dot, i) => {
-      dot.addEventListener('click', () => { goToReview(i); resetReviewAutoplay(); });
-    });
-
-    function startReviewAutoplay() {
-      reviewAutoplay = setInterval(() => goToReview(reviewIdx + 1), 5000);
-    }
-
-    function resetReviewAutoplay() {
-      clearInterval(reviewAutoplay);
-      startReviewAutoplay();
-    }
-
-    startReviewAutoplay();
-
-    // Pause on hover
+    const reviewDotsEl = document.getElementById('reviewDots');
     const reviewsViewport = document.querySelector('.reviews-viewport');
-    reviewsViewport.addEventListener('mouseenter', () => clearInterval(reviewAutoplay));
-    reviewsViewport.addEventListener('mouseleave', startReviewAutoplay);
 
-    // Touch swipe support
-    let touchStartX = 0;
-    reviewsViewport.addEventListener('touchstart', (e) => {
-      touchStartX = e.touches[0].clientX;
-      clearInterval(reviewAutoplay);
-    }, { passive: true });
-    reviewsViewport.addEventListener('touchend', (e) => {
-      const diff = touchStartX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 50) {
-        moveReview(diff > 0 ? 1 : -1);
-      } else {
+    if (reviewsTrack && reviewDotsEl && reviewsViewport) {
+      let reviewIdx = 0;
+      const reviewTotal = 3;
+      const reviewDots = reviewDotsEl.children;
+      let reviewAutoplay;
+
+      function goToReview(idx) {
+        reviewIdx = (idx + reviewTotal) % reviewTotal;
+        reviewsTrack.style.transform = 'translateX(-' + (reviewIdx * 100) + '%)';
+        Array.from(reviewDots).forEach((dot, i) => {
+          dot.classList.toggle('bg-neon', i === reviewIdx);
+          dot.classList.toggle('bg-white/20', i !== reviewIdx);
+        });
+      }
+
+      window.moveReview = function(dir) {
+        goToReview(reviewIdx + dir);
+        resetReviewAutoplay();
+      };
+
+      Array.from(reviewDots).forEach((dot, i) => {
+        dot.addEventListener('click', () => { goToReview(i); resetReviewAutoplay(); });
+      });
+
+      function startReviewAutoplay() {
+        reviewAutoplay = setInterval(() => goToReview(reviewIdx + 1), 5000);
+      }
+
+      function resetReviewAutoplay() {
+        clearInterval(reviewAutoplay);
         startReviewAutoplay();
       }
-    }, { passive: true });
+
+      startReviewAutoplay();
+
+      reviewsViewport.addEventListener('mouseenter', () => clearInterval(reviewAutoplay));
+      reviewsViewport.addEventListener('mouseleave', startReviewAutoplay);
+
+      let touchStartX = 0;
+      reviewsViewport.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+        clearInterval(reviewAutoplay);
+      }, { passive: true });
+      reviewsViewport.addEventListener('touchend', (e) => {
+        const diff = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 50) {
+          moveReview(diff > 0 ? 1 : -1);
+        } else {
+          startReviewAutoplay();
+        }
+      }, { passive: true });
+    }
 
     /* ===== DYNAMIC CONTACTS ===== */
     function applyContacts() {
