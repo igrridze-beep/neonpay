@@ -546,7 +546,7 @@ O pagamento pelo seu serviço é feito imediatamente, através de MB WAY ou em c
             </p>
             <!-- Buttons -->
             <div class="hero-enter d4 flex flex-wrap gap-4">
-              <a href="https://t.me/neonpay_pt" target="_blank" rel="noopener noreferrer" class="btn-glass magnetic" data-cursor
+              <a href="https://t.me/neonpay_pt" data-contact="telegram" target="_blank" rel="noopener noreferrer" class="btn-glass magnetic" data-cursor
                  style="border-color: rgba(0,180,255,0.3);"
                  onmouseover="this.style.borderColor='rgba(0,180,255,0.6)'; this.style.boxShadow='0 0 30px rgba(0,180,255,0.15)'"
                  onmouseout="this.style.borderColor='rgba(0,180,255,0.3)'; this.style.boxShadow='none'"
@@ -557,7 +557,7 @@ O pagamento pelo seu serviço é feito imediatamente, através de MB WAY ou em c
                 </svg>
                 Telegram
               </a>
-              <a href="https://wa.me/351920225665" target="_blank" rel="noopener noreferrer" class="btn-glass magnetic" data-cursor
+              <a href="https://wa.me/351920225665" data-contact="whatsapp" target="_blank" rel="noopener noreferrer" class="btn-glass magnetic" data-cursor
                  style="border-color: rgba(37,211,102,0.3);"
                  onmouseover="this.style.borderColor='rgba(37,211,102,0.6)'; this.style.boxShadow='0 0 30px rgba(37,211,102,0.15)'"
                  onmouseout="this.style.borderColor='rgba(37,211,102,0.3)'; this.style.boxShadow='none'"
@@ -690,7 +690,7 @@ O pagamento pelo seu serviço é feito imediatamente, através de MB WAY ou em c
           Envie a palavra-código <span class="inline-block px-3 py-1 rounded-lg bg-neon/10 text-neon font-bold font-display border border-neon/20">BÓNUS</span> pelo WhatsApp ou Telegram e os nossos consultores responderão imediatamente.
         </p>
         <div class="inline-grid grid-cols-2 gap-4 justify-center reveal reveal-delay-2">
-          <a href="https://t.me/neonpay_pt" target="_blank" rel="noopener noreferrer" class="btn-glass magnetic" data-cursor
+          <a href="https://t.me/neonpay_pt" data-contact="telegram" target="_blank" rel="noopener noreferrer" class="btn-glass magnetic" data-cursor
              style="border-color: rgba(0,180,255,0.3);"
              onmouseover="this.style.borderColor='rgba(0,180,255,0.6)'; this.style.boxShadow='0 0 30px rgba(0,180,255,0.15)'"
              onmouseout="this.style.borderColor='rgba(0,180,255,0.3)'; this.style.boxShadow='none'"
@@ -701,7 +701,7 @@ O pagamento pelo seu serviço é feito imediatamente, através de MB WAY ou em c
             </svg>
             Telegram
           </a>
-          <a href="https://wa.me/351920225665" target="_blank" rel="noopener noreferrer" class="btn-glass magnetic" data-cursor
+          <a href="https://wa.me/351920225665" data-contact="whatsapp" target="_blank" rel="noopener noreferrer" class="btn-glass magnetic" data-cursor
              style="border-color: rgba(37,211,102,0.3);"
              onmouseover="this.style.borderColor='rgba(37,211,102,0.6)'; this.style.boxShadow='0 0 30px rgba(37,211,102,0.15)'"
              onmouseout="this.style.borderColor='rgba(37,211,102,0.3)'; this.style.boxShadow='none'"
@@ -805,7 +805,7 @@ O pagamento pelo seu serviço é feito imediatamente, através de MB WAY ou em c
           <h2 class="font-display font-bold text-2xl md:text-4xl text-white mb-4">Pronto para começar?</h2>
           <p class="text-white/40 mb-8">Envie a palavra-código <span class="inline-block px-3 py-1 rounded-lg bg-neon/10 text-neon font-bold font-display border border-neon/20">BÓNUS</span> pelo WhatsApp ou Telegram e os nossos consultores responderão imediatamente.</p>
           <div class="flex flex-col sm:flex-row justify-center gap-4">
-            <a href="https://t.me/neonpay_pt" target="_blank" rel="noopener noreferrer" class="btn-glass magnetic" data-cursor
+            <a href="https://t.me/neonpay_pt" data-contact="telegram" target="_blank" rel="noopener noreferrer" class="btn-glass magnetic" data-cursor
                style="border-color: rgba(0,180,255,0.3);"
                onmouseover="this.style.borderColor='rgba(0,180,255,0.6)'; this.style.boxShadow='0 0 30px rgba(0,180,255,0.15)'"
                onmouseout="this.style.borderColor='rgba(0,180,255,0.3)'; this.style.boxShadow='none'"
@@ -816,7 +816,7 @@ O pagamento pelo seu serviço é feito imediatamente, através de MB WAY ou em c
               </svg>
               Telegram
             </a>
-            <a href="https://wa.me/351920225665" target="_blank" rel="noopener noreferrer" class="btn-glass magnetic" data-cursor
+            <a href="https://wa.me/351920225665" data-contact="whatsapp" target="_blank" rel="noopener noreferrer" class="btn-glass magnetic" data-cursor
                style="border-color: rgba(37,211,102,0.3);"
                onmouseover="this.style.borderColor='rgba(37,211,102,0.6)'; this.style.boxShadow='0 0 30px rgba(37,211,102,0.15)'"
                onmouseout="this.style.borderColor='rgba(37,211,102,0.3)'; this.style.boxShadow='none'"
@@ -1123,6 +1123,23 @@ O pagamento pelo seu serviço é feito imediatamente, através de MB WAY ou em c
         startReviewAutoplay();
       }
     }, { passive: true });
+
+    /* ===== DYNAMIC CONTACTS ===== */
+    function applyContacts() {
+      var data = JSON.parse(localStorage.getItem('neonpay_contacts') || '{}');
+      var tg = data.telegram || 'neonpay_pt';
+      var wa = data.whatsapp || '351920225665';
+      document.querySelectorAll('[data-contact="telegram"]').forEach(function(el) {
+        el.href = 'https://t.me/' + tg;
+      });
+      document.querySelectorAll('[data-contact="whatsapp"]').forEach(function(el) {
+        el.href = 'https://wa.me/' + wa;
+      });
+    }
+    applyContacts();
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'neonpay_contacts') applyContacts();
+    });
 
   })();
   </script>
