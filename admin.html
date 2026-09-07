@@ -153,13 +153,23 @@
         <div class="hint">Только юзернейм без @. Пример: neonpay_pt</div>
       </div>
       <button class="btn btn-primary" onclick="saveContacts()">Сохранить</button>
-      <div class="success" id="saveSuccess">Контакты сохранены</div>
+      <div class="success" id="saveSuccess">Контакты сохранены (только локально)</div>
       <div class="error" id="saveError">Ошибка сохранения</div>
+      <div class="hint" id="deployHint" style="margin-top:16px; color:#ffaa00; display:none;">
+        ⚠️ Для применения на ВСЕХ пользователях — скопируй код ниже и замени в index.html переменную CONTACTS:
+        <pre id="codeOutput" style="margin-top:10px; background:rgba(0,255,136,0.1); border:1px solid rgba(0,255,136,0.3); border-radius:10px; padding:14px; font-size:0.8rem; color:#00ff88; white-space:pre-wrap; word-break:break-all; font-family:monospace;"></pre>
+      </div>
     </div>
   </div>
 
   <script>
     const PASSWORD = 'neon2026';
+
+    // Текущие значения контактов (должны совпадать с index.html)
+    const DEFAULT_CONTACTS = {
+      whatsapp: '351920225665',
+      telegram: 'neonpay_pt'
+    };
 
     function tryLogin() {
       const pw = document.getElementById('passwordInput').value;
@@ -178,7 +188,8 @@
     });
 
     function loadContacts() {
-      const data = JSON.parse(localStorage.getItem('neonpay_contacts') || '{}');
+      const saved = JSON.parse(localStorage.getItem('neonpay_contacts') || 'null');
+      const data = saved || DEFAULT_CONTACTS;
       document.getElementById('whatsappInput').value = data.whatsapp || '';
       document.getElementById('telegramInput').value = data.telegram || '';
     }
@@ -186,8 +197,16 @@
     function saveContacts() {
       const whatsapp = document.getElementById('whatsappInput').value.replace(/[^0-9]/g, '');
       const telegram = document.getElementById('telegramInput').value.replace(/[^a-zA-Z0-9_]/g, '');
+
+      // Сохраняем в localStorage (только для локального теста)
       localStorage.setItem('neonpay_contacts', JSON.stringify({ whatsapp, telegram }));
+
+      // Показываем код для обновления в index.html
+      document.getElementById('codeOutput').textContent =
+        "var CONTACTS = {\n  whatsapp: '" + whatsapp + "',\n  telegram: '" + telegram + "'\n};";
+
       document.getElementById('saveSuccess').classList.add('show');
+      document.getElementById('deployHint').classList.add('show');
       setTimeout(() => document.getElementById('saveSuccess').classList.remove('show'), 3000);
     }
   </script>

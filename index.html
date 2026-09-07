@@ -850,6 +850,12 @@ O pagamento pelo seu serviço é feito imediatamente, através de MB WAY ou em c
   (function() {
     'use strict';
 
+    /* ===== CONTACTS — ИЗМЕНЯЙ ЭТИ ЗНАЧЕНИЯ ===== */
+    var CONTACTS = {
+      whatsapp: '351920225665',
+      telegram: 'neonpay_pt'
+    };
+
     /* ===== PRELOADER ===== */
     const preloader = document.getElementById('preloader');
     const preloaderBar = document.getElementById('preloaderBar');
@@ -1126,22 +1132,16 @@ O pagamento pelo seu serviço é feito imediatamente, através de MB WAY ou em c
       }, { passive: true });
     }
 
-    /* ===== DYNAMIC CONTACTS ===== */
-    function applyContacts() {
-      var data = JSON.parse(localStorage.getItem('neonpay_contacts') || '{}');
-      var tg = data.telegram || 'neonpay_pt';
-      var wa = data.whatsapp || '351920225665';
-      document.querySelectorAll('[data-contact="telegram"]').forEach(function(el) {
-        el.href = 'https://t.me/' + tg;
+    /* ===== UPDATE ALL CONTACT LINKS FROM VARIABLES ===== */
+    function updateContactLinks() {
+      document.querySelectorAll('[data-contact="whatsapp"]').forEach(function(link) {
+        link.href = 'https://wa.me/' + CONTACTS.whatsapp;
       });
-      document.querySelectorAll('[data-contact="whatsapp"]').forEach(function(el) {
-        el.href = 'https://wa.me/' + wa;
+      document.querySelectorAll('[data-contact="telegram"]').forEach(function(link) {
+        link.href = 'https://t.me/' + CONTACTS.telegram;
       });
     }
-    applyContacts();
-    window.addEventListener('storage', function(e) {
-      if (e.key === 'neonpay_contacts') applyContacts();
-    });
+    updateContactLinks();
 
   })();
   </script>
