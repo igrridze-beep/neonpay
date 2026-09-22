@@ -938,7 +938,7 @@ O pagamento pelo seu serviço é feito imediatamente, através de MB WAY ou em c
       whatsapp: '351920522148',
       telegram: 'neonpay_pt'
     };
-    var CONTACTS = JSON.parse(localStorage.getItem('neonpay_contacts') || 'null') || DEFAULT_CONTACTS;
+    var CONTACTS = Object.assign({}, DEFAULT_CONTACTS);
 
     /* ===== PRELOADER ===== */
     const preloader = document.getElementById('preloader');
@@ -1266,7 +1266,6 @@ O pagamento pelo seu serviço é feito imediatamente, através de MB WAY ou em c
 
       CONTACTS.whatsapp = whatsapp;
       CONTACTS.telegram = telegram;
-      localStorage.setItem('neonpay_contacts', JSON.stringify(CONTACTS));
       updateContactLinks();
 
       document.getElementById('adminCode').textContent =
